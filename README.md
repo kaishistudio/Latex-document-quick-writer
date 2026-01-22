@@ -1,57 +1,92 @@
-# Latex Document Quick Writer
+# 📄 LaTeX Studio - Product Specification
 
-A lightweight WPF desktop app to quickly create, edit and export professional LaTeX documents. Built with .NET 10 and a Fluent-style UI. The app provides ready-to-use templates (academic paper, presentation, resume, technical report) and a form-driven editor with reusable input controls.
+## 🎯 Product Overview
+A lightweight desktop app to quickly create, edit and export professional LaTeX documents. 🚀  
+**Fluent-style UI**, template-driven workflows and a form-based editor reduce LaTeX complexity for researchers, students and professionals.
 
-## Key Features
-- New blank LaTeX project
-- Open / import local projects
-- Select from built-in template library
-- Form-driven editor with modular input controls
-- Export / preview workflows (extendable)
+## 🎯 Goals
+- ✅ Enable users to produce a valid LaTeX project and export a PDF within a few clicks.
+- ✅ Provide reusable templates and modular input controls to speed document assembly.
+- ✅ Surface compile errors and resource issues clearly to aid troubleshooting.
 
-## Prerequisites
-- .NET 10 SDK
-- Visual Studio 2026 (recommended) or `dotnet` CLI
-- Restore NuGet packages before building
+## 👥 Primary Personas
+| Persona | Needs |
+|---------|-------|
+| **👨‍🎓 Researcher/Student** | Standard academic paper templates and quick compile/export |
+| **👨‍💻 Engineer/Technical Writer** | Technical report templates and asset management |
+| **👔 Job Applicant** | Resume templates and easy PDF export |
 
-The project uses a Fluent UI resource dictionary in `App.xaml`. If styles fail to load, install a Fluent-style WPF package (common options):
-- `FluentWPF` — `dotnet add package FluentWPF`
-- or the package referenced by the project: `PresentationFramework.Fluent` — `dotnet add package PresentationFramework.Fluent`
+## 🛠️ Core Features (Functional)
 
-## Quick start
+### 1. 📋 **Main Dashboard**
+- Four primary actions: **New Blank Project**, **Open Local Project**, **Select from Template Library**, **App Settings**
+- Visual template cards with icon, name, short description and quick-load action 🪄
 
-1. Clone the repository:
-   - `git clone <repo-url>`
-2. Open the solution in Visual Studio 2026, or use CLI:
-   - `cd <solution-folder>`
-   - `dotnet restore`
-   - `dotnet build`
-3. Run:
-   - From Visual Studio: Press F5
-   - Or CLI: `dotnet run --project <YourProject.csproj>`
+### 2. 📚 **Template Library**
+- Built-in templates: **Academic Paper**, **Presentation (Beamer)**, **Resume**, **Technical Report**
+- Template detail view: preview, clone to new project, load into editor, delete/import custom templates
 
-## Project layout (important files)
-- `App.xaml` — application entry; merges Fluent UI resource dictionary
-- `MainWindow.xaml` — main UI (template browser, quick actions)
-- `Windows/Editor.xaml` — editor window
-- `Controls/` — custom input controls (`AttachmentInput.xaml`, `ComboInput.xaml`, `DateTextInput.xaml`, `FormulaInput.xaml`, `OnlyTextInput.xaml`, `TableInput.xaml`, `thebibliographyInput.xaml`, etc.)
-- `MainWindow.xaml.cs` — main window code-behind (event handlers)
+### 3. 🆕 **New Project / Project Structure**
+- Create project skeleton: `main.tex`, `assets/`, `bib/`, optional build config
+- Allow initial metadata input (title, author, date, documentclass)
 
-## Troubleshooting
-- Missing resource dictionary / styles: ensure the Fluent package referenced by `App.xaml` is installed and NuGet packages are restored.
-- Fonts or colors not matching: system font `Segoe UI` is used in examples; replace in resources if unavailable.
-- Want Acrylic or advanced Fluent effects: check the installed Fluent package docs — some effects require using a special window base class or additional settings.
+### 4. 📂 **Import/Open Local Project**
+- Import an existing LaTeX folder or `.tex` file
+- Auto-detect `.bib` files and assets; present summary and optional copy-to-project behavior
 
-## Contributing
-Contributions welcome. Please:
-- Fork and create a feature branch
-- Keep commits small and focused
-- Include a short description and test steps in PR
+### 5. ✏️ **Form-driven Editor**
+- Modular input controls (text, date, formula, table, attachments, bibliography entry)
+- Editor composes `main.tex` from form fields and template placeholders
+- Inline snippet insertion (figure, table, equation, citation) ➕
+- Undo/redo and autosave per project
 
-## License
-Default: MIT. Add or update `LICENSE` in the repo root if you use a different license.
+### 6. ⚙️ **Compile & Preview**
+- Invoke local LaTeX toolchain (`pdflatex`/`xelatex`/`lualatex`) or optional Dockerized builder
+- Show compile progress, console output, and mapped errors/warnings (line mapping to editor fields if possible)
+- Provide PDF preview and open exported PDF 👁️
 
-If you want, I can:
-- Convert `App.xaml` to reference a specific Fluent package URI,
-- Add a simple README section that documents template formats and how to add new templates,
-- Or generate sample LaTeX templates to include in `Templates/`.
+### 7. 📤 **Export / Packaging**
+- Export compiled PDF or project ZIP (including all assets and `.tex` files)
+- Export history and last build logs
+
+### 8. 📖 **Bibliography Management**
+- Create/edit `.bib` entries via UI; insert citations into editor fields
+- Support BibTeX / biblatex workflows; choose backend in settings
+
+### 9. 🖼️ **Asset Management**
+- Add images/files via attachment control; automatically copy and reference in project
+- Validate missing resources during compile
+
+### 10. ⚙️ **Settings**
+- Configure LaTeX compiler, compile options, output paths
+- Theme (Light/Dark), accent color, default fonts 🎨
+- Template library path and user templates sync
+
+## 📊 Non-functional Requirements
+- **Target framework**: .NET 10, WPF
+- **Responsive UI** for typical desktop resolutions (min width 1000px)
+- Operations that may block (compile, import) must run off UI thread and show progress + cancel ⏳
+- Clear localization-ready strings (English/Chinese) 🌍
+
+## ✅ Acceptance Criteria (Example)
+- ✅ User can: select a template → edit at least one field → compile → receive a valid PDF within 3 steps, with progress visible
+- ✅ Importing a local project results in a recognized `main.tex` and listed assets; compile attempts produce meaningful logs on failure
+- ✅ Bibliography entries created in UI appear in exported PDF citations
+- ✅ Long tasks are cancelable and do not freeze UI
+
+## 🔄 High-level User Flows
+| Flow | Steps |
+|------|-------|
+| **New Blank Project** | Dashboard → New Blank Project → Fill metadata modal → Project created → Open editor |
+| **Select Template** | Dashboard → Select Template Library → Choose template → Preview → Load into editor or clone → Edit → Compile → Export PDF |
+| **Open Local Project** | Dashboard → Open Local Project → Select folder/file → Import summary → Open editor |
+
+## 🚀 Next Steps (Recommended Deliverables)
+1. 📋 Convert features into prioritized user stories with estimated effort
+2. 🏗️ Implement editor data model that maps form fields to template placeholders (templating engine)
+3. ⚙️ Add Compile service abstraction to support local toolchain and optional Docker backend
+4. 🧪 Create automated tests for template rendering → compile integration (smoke tests)
+
+---
+
+*✨ Making LaTeX accessible and productive for everyone!*
