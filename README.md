@@ -1,4 +1,4 @@
-# 📄 LaTeX Studio - Product Specification
+# 📄Latex document quick writer - Product Specification
 
 ## 🎯 Product Overview
 A lightweight desktop app to quickly create, edit and export professional LaTeX documents. 🚀  
